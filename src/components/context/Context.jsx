@@ -5,6 +5,8 @@ const UPDATE_POKEMON_POSITION = "UPDATE_POKEMON_POSITION";
 const UPDATE_CAPTURED_POKEMONS = "UPDATE_CAPTURED_POKEMONS";
 const UPDATE_SCORE = "UPDATE_SCORE";
 const GAME_IS_OVER = "GAME_IS_OVER";
+const RESTART_GAME = "RESTART_GAME";
+
 //define initial state (plain text)
 const plainTextState = {
   tamanho: 10,
@@ -32,10 +34,11 @@ const plainTextState = {
   capturedPokemons: 0,
   score: 0,
   gameIsOver: false,
+  restartGame: 0,
 };
 
 // create boardMatrix
-const boardMatrix = plainTextState.board.reduce((acumulator, row) => {
+let boardMatrix = plainTextState.board.reduce((acumulator, row) => {
   const currentRow = row.split("");
   acumulator.push(currentRow);
   return acumulator;
@@ -64,6 +67,21 @@ const reducer = (state, action) => {
       return newState;
 
     case UPDATE_POKEMON_POSITION:
+      newState.board.reduce((accumulator, row) => {
+        const currentRow = row.reduce((accumulatorTwo, number) => {
+          if (number != "1" && number != "6") accumulatorTwo.push(number);
+          else accumulatorTwo.push("0");
+          return accumulatorTwo;
+        }, []);
+        accumulator.push(currentRow);
+        return accumulator;
+      }, []);
+      console.log(newState, "all cleaned here bro");
+      const currentIPok = newState.pokemon.i;
+      const currentJPok = newState.pokemon.j;
+      if (newState.board[currentIPok][currentJPok] != "6") {
+        newState.board[currentIPok][currentJPok] = "0";
+      }
       newState.pokemon.i = action.i;
       newState.pokemon.j = action.j;
       newState.board[action.i][action.j] = action.pokemon_value;
@@ -83,8 +101,15 @@ const reducer = (state, action) => {
       console.log("game over :(");
       return newState;
 
+    case RESTART_GAME:
+      let updatedState = { ...newState, ...action.newStateObj };
+      updatedState.restartGame += 1;
+
+      console.log("RESTART", updatedState);
+      return updatedState;
+
     default:
-      return { ...state };
+      return newState;
   }
 };
 

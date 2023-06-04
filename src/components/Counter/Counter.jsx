@@ -5,7 +5,7 @@ import classes from "./Counter.module.css";
 let counter = 0;
 const Counter = () => {
   const [seconds, setSeconds] = useState(10);
-  const { dispatch } = useContext(StateContext);
+  const { state, dispatch } = useContext(StateContext);
   const [almostFinish, setAlmostFinish] = useState(false);
 
   useEffect(() => {
@@ -35,9 +35,13 @@ const Counter = () => {
   useEffect(() => {
     if (seconds === -1) {
       dispatch({ type: "GAME_IS_OVER", gameIsOver: true });
-      alert("Time's up!");
+      //   alert("Time's up!");
     }
   }, [seconds]);
+
+  useEffect(() => {
+    setSeconds(10);
+  }, [state.restartGame]);
 
   return (
     <div className={almostFinish ? classes.almostFinish : null}>

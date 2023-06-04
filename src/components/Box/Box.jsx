@@ -1,11 +1,11 @@
 import classes from "./Box.module.css";
 const paths = {
-  0: "./../../../public/images/casillaVacia.png",
-  1: "./../../../public/images/casillaObstaculo.png",
-  6: "./../../../public/images/casillaJugador.png",
-  7: "./../../../public/images/charmander.png",
-  8: "./../../../public/images/pikachu.png",
-  9: "./../../../public/images/squirtle.png",
+  0: "./../../../images/casillaVacia.png",
+  1: "./../../../images/casillaObstaculo.png",
+  6: "./../../../images/casillaJugador.png",
+  7: "./../../../images/charmander.png",
+  8: "./../../../images/pikachu.png",
+  9: "./../../../images/squirtle.png",
 };
 const Box = (props) => {
   return (

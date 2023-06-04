@@ -33,9 +33,3 @@
 .isUpdating {
   animation: highlight 0.5s ease-in-out;
 }
-
-/* .score {
-  transform: scale(0.8);
-  transition: transform 0.3s ease-in-out;
-  border: 3px solid red;
-} */

@@ -2,6 +2,7 @@ import { useContext, useEffect, useMemo } from "react";
 import { StateContext } from "../context/Context";
 import classes from "./Board.module.css";
 import Box from "../Box/Box";
+import Modal from "../Modal/Modal";
 
 const Board = (props) => {
   const { state, dispatch } = useContext(StateContext);
@@ -62,8 +63,8 @@ const Board = (props) => {
     console.log(state.board, "stateeeee after pokemonnnnnn");
   };
 
-  // create random pokemon and random position for it
-  const { randomPokemonI, randomPokemonJ, randomPokemon } = useMemo(() => {
+  //generate random pokemon and position
+  const generateRandomPokemon = () => {
     const randomPokemon = Math.floor(Math.random() * 3) + 7;
     console.log(randomPokemon, "randomPokemon");
     const generateRandomPokemonPosition = () => {
@@ -79,9 +80,15 @@ const Board = (props) => {
       } else return generateRandomPokemonPosition();
     };
     const { randomPokemonI, randomPokemonJ } = generateRandomPokemonPosition();
-
+    console.log("log inside random pokemons after restart");
     return { randomPokemonI, randomPokemonJ, randomPokemon };
-  }, [state.capturedPokemons]);
+  };
+
+  // create random pokemon and random position for it
+  const { randomPokemonI, randomPokemonJ, randomPokemon } = useMemo(
+    generateRandomPokemon,
+    [state.capturedPokemons, state.restartGame]
+  );
 
   //update the state with the pokemon created
   useEffect(() => {
@@ -89,10 +96,10 @@ const Board = (props) => {
       type: "UPDATE_POKEMON_POSITION",
       i: randomPokemonI,
       j: randomPokemonJ,
-      pokemon_value: randomPokemon,
+      pokemon_value: `${randomPokemon}`,
     });
     console.log("pokemon pos", state.pokemon.i, state.pokemon.j);
-  }, [state.capturedPokemons]);
+  }, [state.capturedPokemons, state.restartGame]);
 
   //create buttonsMatrix
   const buttonsMatrix = state.board.map((row, i) => {
@@ -108,7 +115,7 @@ const Board = (props) => {
 
   return (
     <div
-      className={classes.board + ` ${state.gameIsOver ? classes.gameOver : ""}`}
+      className={classes.board + ` ${props.gameIsOver ? classes.gameOver : ""}`}
     >
       {buttonsMatrix}
     </div>
