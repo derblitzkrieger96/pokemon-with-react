@@ -18,7 +18,24 @@
   justify-content: center;
 }
 
-/* .score-updated {
+@keyframes highlight {
+  0% {
+    color: yellow;
+    /* font-size: 2.2rem; */
+  }
+
+  100% {
+    background-color: initial;
+    font-size: initial;
+  }
+}
+
+.isUpdating {
+  animation: highlight 0.5s ease-in-out;
+}
+
+/* .score {
   transform: scale(0.8);
   transition: transform 0.3s ease-in-out;
+  border: 3px solid red;
 } */

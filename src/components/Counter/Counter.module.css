@@ -1,0 +1,15 @@
+@keyframes highlight {
+  0% {
+    color: red;
+    /* font-size: 2.1rem; */
+  }
+
+  100% {
+    background-color: initial;
+    font-size: initial;
+  }
+}
+
+.almostFinish {
+  animation: highlight 0.5s ease-in-out;
+}

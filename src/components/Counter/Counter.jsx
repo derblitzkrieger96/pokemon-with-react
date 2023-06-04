@@ -1,15 +1,27 @@
 import { useState, useEffect, useContext } from "react";
 import { StateContext } from "../context/Context";
+import classes from "./Counter.module.css";
 
+let counter = 0;
 const Counter = () => {
   const [seconds, setSeconds] = useState(10);
   const { dispatch } = useContext(StateContext);
+  const [almostFinish, setAlmostFinish] = useState(false);
 
   useEffect(() => {
     if (seconds >= -1) {
       const timer = setInterval(() => {
         setSeconds((prevState) => prevState - 1);
       }, 1000);
+
+      if (seconds <= 3) {
+        console.log("almost FInish");
+        setAlmostFinish(true);
+      }
+
+      setTimeout(() => {
+        setAlmostFinish(false);
+      }, 500);
 
       if (seconds === -1) {
         clearInterval(timer);
@@ -27,7 +39,11 @@ const Counter = () => {
     }
   }, [seconds]);
 
-  return <div>{seconds >= 0 ? seconds : 0} seconds</div>;
+  return (
+    <div className={almostFinish ? classes.almostFinish : null}>
+      {seconds >= 0 ? seconds : 0} seconds
+    </div>
+  );
 };
 
 export default Counter;
