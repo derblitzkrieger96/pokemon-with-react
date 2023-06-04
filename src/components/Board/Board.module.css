@@ -1,0 +1,19 @@
+.board {
+  margin: 0 auto;
+  width: 25rem;
+  height: 25rem;
+  max-width: 100%;
+  background-color: gainsboro;
+  /* background-color: black; */
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  box-sizing: border-box;
+  gap: 0px;
+  overflow: hidden;
+}
+
+.gameOver {
+  pointer-events: none;
+  filter: brightness(0.5);
+}

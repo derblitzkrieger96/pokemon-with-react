@@ -1,0 +1,13 @@
+.container {
+  margin: 0 auto;
+  width: 25rem;
+  border-radius: 9px;
+  overflow: hidden;
+  /* border: 10px solid red; */
+  /* height: 25rem; */
+}
+
+.gameOver {
+  pointer-events: none;
+  filter: brightness(0.5);
+}
