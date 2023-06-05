@@ -6,6 +6,7 @@ const UPDATE_CAPTURED_POKEMONS = "UPDATE_CAPTURED_POKEMONS";
 const UPDATE_SCORE = "UPDATE_SCORE";
 const GAME_IS_OVER = "GAME_IS_OVER";
 const RESTART_GAME = "RESTART_GAME";
+const UPDATE_CAPTURED = "UPDATE_CAPTURED";
 
 //define initial state (plain text)
 const plainTextState = {
@@ -32,6 +33,7 @@ const plainTextState = {
     j: 0,
   },
   capturedPokemons: 0,
+  captured: {},
   score: 0,
   gameIsOver: false,
   restartGame: 0,
@@ -76,7 +78,6 @@ const reducer = (state, action) => {
         accumulator.push(currentRow);
         return accumulator;
       }, []);
-      console.log(newState, "all cleaned here bro");
       const currentIPok = newState.pokemon.i;
       const currentJPok = newState.pokemon.j;
       if (newState.board[currentIPok][currentJPok] != "6") {
@@ -89,7 +90,19 @@ const reducer = (state, action) => {
 
     case UPDATE_CAPTURED_POKEMONS:
       newState.capturedPokemons += 1;
-      console.log("updated captured pokemons:", newState.capturedPokemons);
+      if (!newState.captured[action.pokemon]) {
+        newState.captured[action.pokemon] = 1;
+      } else newState.captured[action.pokemon] += 1;
+      console.log(
+        "updated captured pokemons:",
+        newState.capturedPokemons,
+        "types: ",
+        newState.captured
+      );
+      return newState;
+    case UPDATE_CAPTURED:
+      newState.captured[action.pokemon] += 1;
+      console.log(newState.captured);
       return newState;
 
     case UPDATE_SCORE:
@@ -98,14 +111,12 @@ const reducer = (state, action) => {
 
     case GAME_IS_OVER:
       newState.gameIsOver = action.gameIsOver;
-      console.log("game over :(");
+
       return newState;
 
     case RESTART_GAME:
       let updatedState = { ...newState, ...action.newStateObj };
       updatedState.restartGame += 1;
-
-      console.log("RESTART", updatedState);
       return updatedState;
 
     default:

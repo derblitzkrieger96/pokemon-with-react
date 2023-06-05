@@ -14,6 +14,14 @@
   text-align: center;
 }
 
+.summaryContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 1rem;
+  gap: 1rem;
+}
+
 .pokemonQuantity {
   display: flex;
   justify-content: space-around;
@@ -21,4 +29,10 @@
 
 .pokemonQuantity span {
   text-align: center;
+  font-weight: 500;
+}
+
+.image {
+  width: 20px;
+  overflow: hidden;
 }

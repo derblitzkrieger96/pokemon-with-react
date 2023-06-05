@@ -4,7 +4,7 @@ import classes from "./Counter.module.css";
 
 let counter = 0;
 const Counter = () => {
-  const [seconds, setSeconds] = useState(10);
+  const [seconds, setSeconds] = useState(20);
   const { state, dispatch } = useContext(StateContext);
   const [almostFinish, setAlmostFinish] = useState(false);
 
@@ -40,7 +40,7 @@ const Counter = () => {
   }, [seconds]);
 
   useEffect(() => {
-    setSeconds(10);
+    setSeconds(20);
   }, [state.restartGame]);
 
   return (

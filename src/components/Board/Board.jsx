@@ -35,7 +35,7 @@ const Board = (props) => {
   //verify if box has pokemon
   const boxHasPokemon = (i, j) => {
     console.log(state.board[i][j], "pokemonnnnnn");
-    return [7, 8, 9].includes(Number(state.board[i][j]));
+    return [[7, 8, 9].includes(Number(state.board[i][j])), state.board[i][j]];
   };
 
   // click handler
@@ -49,7 +49,12 @@ const Board = (props) => {
     }
 
     //the box contains a pokemon
-    if (boxHasPokemon(i, j)) {
+    const [verifyBoxHasPokemon, pokemonValue] = boxHasPokemon(i, j);
+    if (verifyBoxHasPokemon) {
+      dispatch({
+        type: "UPDATE_CAPTURED_POKEMONS",
+        pokemon: pokemonValue,
+      });
       dispatch({ type: "UPDATE_SCORE" });
       dispatch({
         type: "UPDATE_PLAYER_POSITION",
@@ -57,8 +62,13 @@ const Board = (props) => {
         j,
       });
 
-      dispatch({ type: "UPDATE_CAPTURED_POKEMONS" });
-      console.log("tiene pokemonnnnnn");
+      // useEffect(() => {
+      //   dispatch({
+      //     type: "UPDATE_CAPTURED_POKEMONS",
+      //     pokemon: pokemonValue,
+      //   });
+      // }, [state.score]);
+      // console.log("totalCaptured:", state.capturedPokemons);
     }
     console.log(state.board, "stateeeee after pokemonnnnnn");
   };

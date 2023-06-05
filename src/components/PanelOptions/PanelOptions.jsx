@@ -10,6 +10,7 @@ const PanelOptions = () => {
         capturedPokemons: 0,
         score: 0,
         gameIsOver: false,
+        captured: {},
       },
     });
     dispatch({ type: "UPDATE_PLAYER_POSITION", i: 9, j: 9 });
