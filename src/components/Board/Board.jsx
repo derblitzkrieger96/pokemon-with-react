@@ -2,11 +2,9 @@ import { useContext, useEffect, useMemo } from "react";
 import { StateContext } from "../context/Context";
 import classes from "./Board.module.css";
 import Box from "../Box/Box";
-import Modal from "../Modal/Modal";
 
 const Board = (props) => {
   const { state, dispatch } = useContext(StateContext);
-  // console.log(algo, "aaaaaaaaaaaaaa");
 
   //check if box is empty
   const boxIsEmpty = (board_matrix, i, j) => {
@@ -34,7 +32,6 @@ const Board = (props) => {
 
   //verify if box has pokemon
   const boxHasPokemon = (i, j) => {
-    console.log(state.board[i][j], "pokemonnnnnn");
     return [[7, 8, 9].includes(Number(state.board[i][j])), state.board[i][j]];
   };
 
@@ -61,26 +58,16 @@ const Board = (props) => {
         i,
         j,
       });
-
-      // useEffect(() => {
-      //   dispatch({
-      //     type: "UPDATE_CAPTURED_POKEMONS",
-      //     pokemon: pokemonValue,
-      //   });
-      // }, [state.score]);
-      // console.log("totalCaptured:", state.capturedPokemons);
     }
-    console.log(state.board, "stateeeee after pokemonnnnnn");
   };
 
-  //generate random pokemon and position
+  //function that generates a random pokemon and position
   const generateRandomPokemon = () => {
     const randomPokemon = Math.floor(Math.random() * 3) + 7;
-    console.log(randomPokemon, "randomPokemon");
+
     const generateRandomPokemonPosition = () => {
       const randomPokemonI = Math.floor(Math.random() * 10);
       const randomPokemonJ = Math.floor(Math.random() * 10);
-      console.log(randomPokemonI, randomPokemonJ, "kkkkkkkk");
 
       if (boxIsEmpty(state.board, randomPokemonI, randomPokemonJ)) {
         return {
@@ -90,7 +77,6 @@ const Board = (props) => {
       } else return generateRandomPokemonPosition();
     };
     const { randomPokemonI, randomPokemonJ } = generateRandomPokemonPosition();
-    console.log("log inside random pokemons after restart");
     return { randomPokemonI, randomPokemonJ, randomPokemon };
   };
 
@@ -108,7 +94,6 @@ const Board = (props) => {
       j: randomPokemonJ,
       pokemon_value: `${randomPokemon}`,
     });
-    console.log("pokemon pos", state.pokemon.i, state.pokemon.j);
   }, [state.capturedPokemons, state.restartGame]);
 
   //create buttonsMatrix

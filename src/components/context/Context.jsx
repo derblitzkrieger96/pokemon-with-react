@@ -1,5 +1,6 @@
 import { createContext, useReducer } from "react";
 
+//constants to check type of actions in the reducer
 const UPDATE_PLAYER_POSITION = "UPDATE_PLAYER_POSITION";
 const UPDATE_POKEMON_POSITION = "UPDATE_POKEMON_POSITION";
 const UPDATE_CAPTURED_POKEMONS = "UPDATE_CAPTURED_POKEMONS";
@@ -93,16 +94,10 @@ const reducer = (state, action) => {
       if (!newState.captured[action.pokemon]) {
         newState.captured[action.pokemon] = 1;
       } else newState.captured[action.pokemon] += 1;
-      console.log(
-        "updated captured pokemons:",
-        newState.capturedPokemons,
-        "types: ",
-        newState.captured
-      );
+
       return newState;
     case UPDATE_CAPTURED:
       newState.captured[action.pokemon] += 1;
-      console.log(newState.captured);
       return newState;
 
     case UPDATE_SCORE:

@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import { StateContext } from "../context/Context";
 import classes from "./Counter.module.css";
 
-let counter = 0;
 const Counter = () => {
   const [seconds, setSeconds] = useState(20);
   const { state, dispatch } = useContext(StateContext);
@@ -15,7 +14,6 @@ const Counter = () => {
       }, 1000);
 
       if (seconds <= 3) {
-        console.log("almost FInish");
         setAlmostFinish(true);
       }
 
@@ -35,7 +33,6 @@ const Counter = () => {
   useEffect(() => {
     if (seconds === -1) {
       dispatch({ type: "GAME_IS_OVER", gameIsOver: true });
-      //   alert("Time's up!");
     }
   }, [seconds]);
 
