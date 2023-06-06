@@ -8,6 +8,9 @@ const UPDATE_SCORE = "UPDATE_SCORE";
 const GAME_IS_OVER = "GAME_IS_OVER";
 const RESTART_GAME = "RESTART_GAME";
 const UPDATE_CAPTURED = "UPDATE_CAPTURED";
+const PLAY_GAME = "PLAY_GAME";
+const PAUSE_GAME = "PAUSE_GAME";
+const CLEAR_BOARD = "CLEAR_BOARD";
 
 //define initial state (plain text)
 const plainTextState = {
@@ -23,7 +26,7 @@ const plainTextState = {
     "0001001000",
     "0111001000",
     "0000100000",
-    "0000000016",
+    "0000000010",
   ],
   player: {
     i: 9,
@@ -38,6 +41,8 @@ const plainTextState = {
   score: 0,
   gameIsOver: false,
   restartGame: 0,
+  isPlaying: false,
+  isPaused: false,
 };
 
 // create boardMatrix
@@ -106,13 +111,34 @@ const reducer = (state, action) => {
 
     case GAME_IS_OVER:
       newState.gameIsOver = action.gameIsOver;
-
+      newState.isPlaying = false;
+      newState.score = 0;
       return newState;
 
     case RESTART_GAME:
       let updatedState = { ...newState, ...action.newStateObj };
       updatedState.restartGame += 1;
       return updatedState;
+
+    case PLAY_GAME:
+      newState.isPlaying = true;
+      return newState;
+
+    case PAUSE_GAME:
+      newState.isPaused = action.pauseGame;
+      return newState;
+
+    case CLEAR_BOARD:
+      newState.board = newState.board.reduce((accumulator, row) => {
+        const currentRow = row.reduce((accumulatorNum, num) => {
+          if (num === "1") accumulatorNum.push(num);
+          else accumulatorNum.push("0");
+          return accumulatorNum;
+        }, []);
+        accumulator.push(currentRow);
+        return accumulator;
+      }, []);
+      return newState;
 
     default:
       return newState;

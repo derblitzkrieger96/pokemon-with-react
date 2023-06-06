@@ -83,18 +83,25 @@ const Board = (props) => {
   // create random pokemon and random position for it
   const { randomPokemonI, randomPokemonJ, randomPokemon } = useMemo(
     generateRandomPokemon,
-    [state.capturedPokemons, state.restartGame]
+    [state.capturedPokemons, state.restartGame, state.isPlaying]
   );
 
   //update the state with the pokemon created
   useEffect(() => {
-    dispatch({
-      type: "UPDATE_POKEMON_POSITION",
-      i: randomPokemonI,
-      j: randomPokemonJ,
-      pokemon_value: `${randomPokemon}`,
-    });
-  }, [state.capturedPokemons, state.restartGame]);
+    if (state.isPlaying)
+      dispatch({
+        type: "UPDATE_POKEMON_POSITION",
+        i: randomPokemonI,
+        j: randomPokemonJ,
+        pokemon_value: `${randomPokemon}`,
+      });
+  }, [state.capturedPokemons, state.restartGame, state.isPlaying]);
+
+  useEffect(() => {
+    if (state.isPlaying) {
+      dispatch({ type: "UPDATE_PLAYER_POSITION", i: 9, j: 9 });
+    }
+  }, [state.isPlaying]);
 
   //create buttonsMatrix
   const buttonsMatrix = state.board.map((row, i) => {
@@ -110,7 +117,14 @@ const Board = (props) => {
 
   return (
     <div
-      className={classes.board + ` ${props.gameIsOver ? classes.gameOver : ""}`}
+      className={
+        classes.board +
+        ` ${
+          props.gameIsOver || !state.isPlaying || state.isPaused
+            ? classes.disableBoard
+            : ""
+        }`
+      }
     >
       {buttonsMatrix}
     </div>

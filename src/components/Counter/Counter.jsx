@@ -8,31 +8,35 @@ const Counter = () => {
   const [almostFinish, setAlmostFinish] = useState(false);
 
   useEffect(() => {
-    if (seconds >= -1) {
+    // start counter down
+    if (state.isPlaying && seconds >= 0 && !state.isPaused) {
       const timer = setInterval(() => {
         setSeconds((prevState) => prevState - 1);
       }, 1000);
 
+      //   show message with red color when the game is finishing
       if (seconds <= 3) {
         setAlmostFinish(true);
       }
-
+      //   remove red color after 0.5 seconds
       setTimeout(() => {
         setAlmostFinish(false);
       }, 500);
 
-      if (seconds === -1) {
+      // finish counter when it reaches -1
+      if (seconds === 0) {
         clearInterval(timer);
       }
       return () => {
         clearInterval(timer);
       };
     }
-  }, [seconds]);
+  }, [seconds, state.isPlaying, state.isPaused]);
 
   useEffect(() => {
-    if (seconds === -1) {
+    if (seconds === 0) {
       dispatch({ type: "GAME_IS_OVER", gameIsOver: true });
+      dispatch({ type: "CLEAR_BOARD" });
     }
   }, [seconds]);
 

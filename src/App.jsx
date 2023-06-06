@@ -1,8 +1,5 @@
-import { useContext } from "react";
 import "./App.css";
-import Board from "./components/Board/Board";
-import PanelInfo from "./components/PanelInfo/PanelInfo";
-import { StateContext, StateProvider } from "./components/context/Context";
+import { StateProvider } from "./components/context/Context";
 import AppWithState from "./components/AppWithState/AppWithState";
 
 function App() {
@@ -23,9 +20,11 @@ function App() {
     ],
   };
   return (
-    <StateProvider>
-      <AppWithState board={boardObj} />
-    </StateProvider>
+    <div className="card">
+      <StateProvider>
+        <AppWithState board={boardObj} />
+      </StateProvider>
+    </div>
   );
 }
 
