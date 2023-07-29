@@ -38,7 +38,7 @@ https://github.com/derblitzkrieger96/pokemon-with-react/assets/100312715/b5bfe3d
 - React: Front-end JavaScript library for building user interfaces.
 - HTML and CSS: For structuring and styling the application.
 - React Context and Reducer: For managing the game state.
-- [Any other technologies you used in the project]
+
 
 ## Installation and Usage
 
